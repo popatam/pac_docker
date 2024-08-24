@@ -74,16 +74,11 @@ case "$option" in
   sslocal -c /tmp/config.json
   ;;
 -xray)
-  if [ -x "xray-knife" ]; then
-    while :; do {
-      echo -ne "HTTP/1.0 200 OK\r\nContent-Length: $(wc -c </tmp/localproxy.pac)\r\n\r\n"
-      cat $PAC_FILE
-    } | nc -l -p $PAC_PORT; done &
-    xray-knife proxy -c "$url" -p $SOCKS_PORT -a 0.0.0.0
-  else
-    echo "Error: xray-knife not found or not executable."
-    exit 1
-  fi
+  while :; do {
+    echo -ne "HTTP/1.0 200 OK\r\nContent-Length: $(wc -c </tmp/localproxy.pac)\r\n\r\n"
+    cat $PAC_FILE
+  } | nc -l -p $PAC_PORT; done &
+  xray-knife proxy -c "$url" -p $SOCKS_PORT -a 0.0.0.0
   ;;
 *)
   usage

@@ -25,4 +25,5 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64/v8
           tags: ${{ steps.metadata.outputs.tags }}
+          target: pac
           push: true
